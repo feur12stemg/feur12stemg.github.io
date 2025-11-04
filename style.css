@@ -5,16 +5,14 @@
 }
 
 body {
-    display: grid;
-    place-content: center;
-    height: 100dvh;
-    width: 100dvw;
-	overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .flipbook {
-    width: 90vw;
-    height: 90vh;
+    height: 100vh;
 }
 
 .flipbook .hard {
@@ -28,19 +26,10 @@ body {
 .flipbook .page {
     background: white;
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-    gap: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.11);
 }
 
 .page img{
 	height: 100%;
-}
-
-.flipbook .page small{
-	font-size: 14px;
-    margin-bottom: 10px;
 }
 
