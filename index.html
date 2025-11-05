@@ -9,31 +9,76 @@
 </head>
 
 <body>
-  <div class="flipbook">
-    <div>
-      <img src="images/Coverpage.png" alt="">
+  <main>
+    <div class="flipbook">
+      <div>
+        <img src="images/Coverpage.png" alt="">
+      </div>
+      <div>
+        <img src="images/Coverpage.png" alt="" />
+      </div>
+      <div>
+        <img src="images/Coverpage.png" alt="" />
+      </div>
+      <div>
+        <img src="images/Coverpage.png" alt="" />
+      </div>
+      <div>
+        <img src="images/Coverpage.png" alt="" />
+      </div>
+      <div>
+        <img src="images/Coverpage.png" alt="" />
+      </div>
     </div>
-    <div>
-      <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/02.jpg" alt="" />
-    </div>
-    <div>
-      <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/03.jpg" alt="" />
-    </div>
-    <div>
-      <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/04.jpg" alt="" />
-    </div>
-    <div>
-      <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/05.jpg" alt="" />
-    </div>
-    <div>
-      <img src="https://raw.github.com/blasten/turn.js/master/demos/magazine/pages/06.jpg" alt="" />
-    </div>
-  </div>
-
+  </main>
+  
   <script src="jquery.js"></script>
-  <script src="turn.js"></script>
+  <script src="turn4.js"></script>
   <script>
-    $(".flipbook").turn();
+    let current_height = 0
+    let current_width = 0
+    function set_current_viewport() {
+      current_height = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+      current_width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    }
+
+    function is_viewport_landscape(){
+      return current_width > current_height
+    }
+
+    function get_display_type(){
+      return is_viewport_landscape() ? "double" : "single"
+    }
+
+    function get_width_aspect_ratio_of_707_1000(new_height){
+      const original_width = 707
+      const original_height = 1000
+      let new_width = new_height * original_width / original_height
+
+      return new_width
+    }
+
+    window.addEventListener("resize", () => {
+      set_current_viewport()
+      let display_type = get_display_type()
+      let new_height = current_height
+      let new_width = get_width_aspect_ratio_of_707_1000(new_height)  * (1 + is_viewport_landscape())
+      $(".flipbook").turn("display", display_type);
+      $(".flipbook").turn("size", new_width, new_height);
+    })
+
+    // 
+    set_current_viewport()
+    let display = get_display_type()
+    let magazine_height = current_height
+    let magazine_width = get_width_aspect_ratio_of_707_1000(magazine_height) * (1 + is_viewport_landscape())
+    $(".flipbook").turn({
+      display: display,
+      gradients: true,
+      width: magazine_width,
+      height: magazine_height,
+      autoCenter: true,
+    });
   </script>
 </body>
 
