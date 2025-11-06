@@ -15,29 +15,30 @@
         <img src="images/Coverpage.png" alt="">
       </div>
       <div>
-        <img src="images/Coverpage.png" alt="" />
+        <img src="images/Seksyon 1.png" alt="" />
       </div>
       <div>
-        <img src="images/Coverpage.png" alt="" />
+        <img src="images/Seksyon 1.png" alt="" />
       </div>
       <div>
-        <img src="images/Coverpage.png" alt="" />
+        <img src="images/Seksyon 1.png" alt="" />
       </div>
       <div>
-        <img src="images/Coverpage.png" alt="" />
+        <img src="images/Seksyon 1.png" alt="" />
       </div>
       <div>
-        <img src="images/Coverpage.png" alt="" />
+        <img src="images/Credits.png" alt="" />
       </div>
     </div>
   </main>
   
   <script src="jquery.js"></script>
   <script src="turn4.js"></script>
-  <script>
+  <script>  
     let current_height = 0
     let current_width = 0
     function set_current_viewport() {
+      // https://stackoverflow.com/questions/1248081/how-to-get-the-browser-viewport-dimensions
       current_height = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
       current_width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
     }
@@ -46,38 +47,34 @@
       return current_width > current_height
     }
 
-    function get_display_type(){
-      return is_viewport_landscape() ? "double" : "single"
-    }
-
-    function get_width_aspect_ratio_of_707_1000(new_height){
+    function get_magazine_width(is_double_display){
       const original_width = 707
       const original_height = 1000
-      let new_width = new_height * original_width / original_height
+      const new_width = current_height * original_width / original_height
 
-      return new_width
+      return new_width * (1 + is_double_display)
     }
 
     window.addEventListener("resize", () => {
       set_current_viewport()
-      let display_type = get_display_type()
-      let new_height = current_height
-      let new_width = get_width_aspect_ratio_of_707_1000(new_height)  * (1 + is_viewport_landscape())
-      $(".flipbook").turn("display", display_type);
-      $(".flipbook").turn("size", new_width, new_height);
+      let display_type = is_viewport_landscape()
+      let new_width = get_magazine_width(display_type)
+      $(".flipbook").turn("display", display_type  ? "double" : "single");
+      $(".flipbook").turn("size", new_width, current_height);
     })
 
     // 
     set_current_viewport()
-    let display = get_display_type()
+    let display_type = is_viewport_landscape()
     let magazine_height = current_height
-    let magazine_width = get_width_aspect_ratio_of_707_1000(magazine_height) * (1 + is_viewport_landscape())
+    let magazine_width = get_magazine_width(display_type)
     $(".flipbook").turn({
-      display: display,
-      gradients: true,
+      display: display_type  ? "double" : "single",
       width: magazine_width,
       height: magazine_height,
+      inclination: 100,
       autoCenter: true,
+      duration: 1000,
     });
   </script>
 </body>
